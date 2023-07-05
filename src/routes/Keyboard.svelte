@@ -3,13 +3,13 @@
 import {keylist,keysize,keyscount,NonCap,Cap} from "./stores.js";
 import Key from "./key.svelte";
 let keydata=[];
-let mode=false;
-let height;
+let mode=true;
+let height=10;
 let width=10;
-let parentwidth=10;
-let parentelement=this;
-let childelement=10;
-$:scale=0.6*parentwidth/width;
+let varwidth=width;
+export function shine(value,state){
+    keydata[value].refs.changecolor(state)
+}
 onMount(()=>{
     let keyscounter=0;
     let x_count=0;
@@ -43,28 +43,49 @@ onMount(()=>{
     keydata[56].values=['Space'];
     width=keydata[keydata.length-1]['position']['x']+basesize*$keysize[keydata.length-1];
     height=keydata[keydata.length-1]['position']['y']+basesize+10;
-    parentwidth=parentelement.offsetWidth;
+    varwidth=width;
 });
 </script>
-
 <svelte:window on:resize={()=>{
-    parentwidth=parentelement.offsetWidth;
-}}/>
+    varwidth=Math.min(window.innerWidth,width);
+}
 
+}/>
+<div class="contain">
+<div class="flexed">
+    <div class="buttons">
+        <button on:click={()=>mode=!mode}>Show key speed</button>
+    </div>
+</div>
+<div class="flexed" >
 
-<div class="flexed"  bind:this={parentelement}>
-    <div class="inside" style="height:{height}px;width:{width}px;transform-origin:center center;transform:scale({scale});" bind:this={childelement}>
+<svg height={height*varwidth/width*0.7} width={varwidth} viewBox="0 0 {width} {height}"   >
 {#each keydata as key}
 <Key size={key.size} mode={mode} position={key.position} values={key.values} greenscale={key.greenscale} bind:this={key.refs} />
 {/each}
+    </svg>
 </div>
 </div>
 <style>
-    div{position:relative;
+    .contain{
+        width:100%;
+        height:50vh;
     }
-    .inside{
-        left:50%;
-        translate:-50% 0%;
-    }
+.flexed{
+    display:flex;
+    justify-content: center;
+    align-items:end;
+}
+button{
+    border-radius: 20px;
+    height:50px;
+    width:250px;
+    font-size: 22px;
+    background-color: gray;
+    border-style: groove;
+    border-width:2px;
+    margin:5px;
+}
+
 </style>
 

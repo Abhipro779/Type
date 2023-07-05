@@ -4,3 +4,6 @@ export const keysize=readable([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1.5, 1,
 export const keyscount=readable([14,28,41,53,61]);
 export const NonCap=readable(['ऽ', '१', '२', '३', '४', '५', '६', '७', '८', '९', '०', '-', '',"Back","Tab", 'ट', 'ौ', 'े', 'र', 'त', 'य', 'ु', 'ि', 'ो', 'प', 'इ', 'ए', 'ॐ',"Caps", 'ा', 'स', 'द', 'उ', 'ग', 'ह', 'ज', 'क', 'ल', ';', "'","Enter","Shift", 'ष', 'ड', 'छ', 'व', 'ब', 'न', 'म', ',' ,'।', '्',"Shift","Ctrl","WN","Alt"," ","Alt","FN","Ctx","Ctrl"]);
 export const Cap=readable(['़', '!', '@', '#', '$', '%', '^', '&', '*', '', '॰', '॒', '',"None","None", 'ठ', 'औ', 'ै', 'ृ', 'थ', 'ञ', 'ू', 'ी', 'ओ', 'फ', 'ई', 'ऐ', 'ः',"None", 'आ', 'श', 'ध', 'ऊ', 'घ', 'अ', 'झ', 'ख', 'ळ', ':', '"',"None","None", 'ऋ', 'ढ', 'च', 'ँ', 'भ', 'ण', 'ं', 'ङ', '॥', '?',"None","None","None","None","None","None","None","None","None"]);
+let length=0;
+const unsubscribe=keylist.subscribe((value)=>length=value.length);
+export const speed=writable(Array(length).fill([[],[]]));
