@@ -1,15 +1,11 @@
 <script>
     import {onMount} from "svelte";
-import {keylist,keysize,keyscount,NonCap,Cap} from "./stores.js";
+import {keylist,keysize,keyscount,NonCap,Cap,reset} from "./stores.js";
 import Key from "./key.svelte";
 let keydata=[];
-let mode=false;
+let mode=true;
 let height;
 let width=10;
-let parentwidth=10;
-let parentelement=this;
-let childelement=10;
-$:scale=0.6*parentwidth/width;
 onMount(()=>{
     let keyscounter=0;
     let x_count=0;
@@ -43,21 +39,19 @@ onMount(()=>{
     keydata[56].values=['Space'];
     width=keydata[keydata.length-1]['position']['x']+basesize*$keysize[keydata.length-1];
     height=keydata[keydata.length-1]['position']['y']+basesize+10;
-    parentwidth=parentelement.offsetWidth;
+
 });
 </script>
 
-<svelte:window on:resize={()=>{
-    parentwidth=parentelement.offsetWidth;
-}}/>
 
+<button on:click={reset}>Click for reset.</button>
 
-<div class="flexed"  bind:this={parentelement}>
-    <div class="inside" style="height:{height}px;width:{width}px;transform-origin:center center;transform:scale({scale});" bind:this={childelement}>
+<div class="flexed"  >
+    <svg style="aspect-ratio:{width/height};width:80%" viewBox="0 0 {width} {height}">
 {#each keydata as key}
 <Key size={key.size} mode={mode} position={key.position} values={key.values} greenscale={key.greenscale} bind:this={key.refs} />
 {/each}
-</div>
+    </svg>
 </div>
 <style>
     div{position:relative;

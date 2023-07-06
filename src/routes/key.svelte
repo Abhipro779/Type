@@ -23,12 +23,14 @@
     
 </script>
 
-<svg class={color}  style="left:{position.x};top:{position.y}" height={size.height} width={size.width-2}>
+<svg   x={position.x} y={position.y} height={size.height} width={size.width-2}>
 {#if mode}
 {#if values.length==2}
+<rect height={size.height} width={size.width} class={color} />
 <text x=20px y=25px text-anchor="middle" alignment-baseline="middle">{values[0]}</text>
 <text x={size.width-50} y={size.height-40} text-anchor="middle" alignment-baseline="middle">{values[1]}</text>
 {:else}
+<rect height={size.height} width={size.width} class={color} />
 <text x={size.width/2-5} y={size.height/2-10} text-anchor="middle" alignment-baseline="middle">{values[0]}</text>
 {/if}
 {:else}
@@ -48,17 +50,17 @@
     svg{
         border-radius: 20px;
         fill:blue;
-        box-shadow: inset 0px 0px 50px 20px #585858;
+        fill: #585858;
         position:absolute;
     }
 .normal{
-    box-shadow: #585858;
+    fill: #585858;
 }
 .cor{
-    box-shadow: inset 0px 0px 50px 20px #163106;
+    fill: #163106;
 }
 .wro{
-    box-shadow:inset 0px 0px 50px 20px #701a1a;
+    fill: #701a1a;
 }
 text{
     fill:rgba(21, 22, 21, 0.637);
@@ -69,7 +71,10 @@ text{
     stroke-width: 2px;
     
 }
-polygon,rect{
+polygon{
     filter:blur(15px);
+}
+rect{
+    filter:blur(2px);
 }
 </style>
