@@ -1,12 +1,11 @@
 <script>
-    import {onMount} from "svelte";
 import {keylist,keysize,keyscount,NonCap,Cap,reset} from "./stores.js";
 import Key from "./key.svelte";
+export let nextitem;
 let keydata=[];
 let mode=true;
 let height;
 let width=10;
-onMount(()=>{
     let keyscounter=0;
     let x_count=0;
     let y_count=0;
@@ -40,14 +39,21 @@ onMount(()=>{
     width=keydata[keydata.length-1]['position']['x']+basesize*$keysize[keydata.length-1];
     height=keydata[keydata.length-1]['position']['y']+basesize+10;
 
+export function color(value){
+    console.log(value[1]);
+value[0].forEach(element => {
+    keydata[element].refs.changecolor(value[1]);
 });
+}
 </script>
 
-
+<div class="buttonholder flexed">
 <button on:click={reset}>Click for reset.</button>
-
-<div class="flexed"  >
-    <svg style="aspect-ratio:{width/height};width:80%" viewBox="0 0 {width} {height}">
+<div class="thebox">{nextitem==" " ? "_" : nextitem}</div>
+<button on:click={()=>mode=!mode}>Change Mode</button>
+</div>
+<div class="flexed down" >
+    <svg style="aspect-ratio:{width/height};width:70%" viewBox="0 0 {width} {height}">
 {#each keydata as key}
 <Key size={key.size} mode={mode} position={key.position} values={key.values} greenscale={key.greenscale} bind:this={key.refs} />
 {/each}
@@ -59,6 +65,38 @@ onMount(()=>{
     .inside{
         left:50%;
         translate:-50% 0%;
+    }
+    .flexed{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .down{
+
+    }
+    .buttonholder{
+        justify-content: space-evenly;
+        margin:10px;
+        padding:5px;
+    }
+    button{
+        aspect-ratio:2;
+        width:100px;
+        box-shadow: 0px 0px 5px 2px;
+        background-color: gray;
+        transition:scale 0.5s, box-shadow 0.5s;
+        border-radius: 20px;
+        border-color: black;
+    }
+    button:hover{
+        scale: 1.2;
+        box-shadow:0px 0px 7px 5px rgba(245, 2, 2, 0.367);
+    }
+    .thebox{
+        width:40%; 
+        display: flex;
+        justify-content: center;
+        font-size: 32px;
     }
 </style>
 

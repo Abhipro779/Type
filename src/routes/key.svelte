@@ -27,21 +27,21 @@
 {#if mode}
 {#if values.length==2}
 <rect height={size.height} width={size.width} class={color} />
-<text x=20px y=25px text-anchor="middle" alignment-baseline="middle">{values[0]}</text>
-<text x={size.width-50} y={size.height-40} text-anchor="middle" alignment-baseline="middle">{values[1]}</text>
+<text x={size.width*0.15} y={size.height*0.35}>{values[0]}</text>
+<text x={size.width*0.6} y={size.height*0.75}>{values[1]}</text>
 {:else}
 <rect height={size.height} width={size.width} class={color} />
-<text x={size.width/2-5} y={size.height/2-10} text-anchor="middle" alignment-baseline="middle">{values[0]}</text>
+<text x={size.width/2-5} y={size.height/2+5}>{values[0]}</text>
 {/if}
 {:else}
 {#if values.length==2}
     <polygon points="0,0 0,{size.height} {size.width},0" fill={getcolor(0)}/>
-    <text x=20px y=25px text-anchor="middle" alignment-baseline="middle">{values[0]}</text>
+    <text x={size.width*0.15} y={size.height*0.35}>{values[0]}</text>
     <polygon points="0,{size.height} {size.width},{size.height} {size.width},0" fill={getcolor(1)}/>
-    <text x={size.width-50} y={size.height-40} text-anchor="middle" alignment-baseline="middle">{values[1]}</text>
+    <text x={size.width*0.6} y={size.height*0.75}>{values[1]}</text>
     {:else}
     <rect height={size.height} width={size.width} fill={getcolor(0)}/>
-    <text x={size.width/2-5} y={size.height/2+5} text-anchor="middle" alignment-baseline="middle">{values[0]}</text>
+    <text x={size.width/2-5} y={size.height/2+5}>{values[0]}</text>
     {/if}
     {/if}
 </svg>

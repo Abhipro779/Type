@@ -6,11 +6,12 @@ export const NonCap=readable(['ऽ', '१', '२', '३', '४', '५', '६', '
 export const Cap=readable(['़', '!', '@', '#', '$', '%', '^', '&', '*', '', '॰', '॒', '',"None","None", 'ठ', 'औ', 'ै', 'ृ', 'थ', 'ञ', 'ू', 'ी', 'ओ', 'फ', 'ई', 'ऐ', 'ः',"None", 'आ', 'श', 'ध', 'ऊ', 'घ', 'अ', 'झ', 'ख', 'ळ', ':', '"',"None","None", 'ऋ', 'ढ', 'च', 'ँ', 'भ', 'ण', 'ं', 'ङ', '॥', '?',"None","None","None","None","None","None","None","None","None"]);
 
 export const speeddata=readable(Array(get(keylist).length).fill([]))
-
+export const toggler=writable(true);
 const maintexts=[
     "ी होपे योु ारे उिने।",
     "औहात िस योुर नामे?",
-    "माहेनदरानागार बाता कातहमानदु साममा।"
+    "माहेनदरानागार बाता कातहमानदु साममा।",
+    "थहिस िस ा लोनग तेसत दोने तो तेसत ौेतहेर चुरसोर ौिलल रेसेत ोन रेसिषे ोर नोत। ी होपे ित ौिलल रेसिषे।"
 ]
 
 export const displaytext=writable(maintexts[0])
@@ -23,6 +24,7 @@ return maintexts[Math.floor(Math.random()*maintexts.length)]
 });
 counter.set(0);
 console.log(`reset ran!${get(counter)}`);
+toggler.update(value=>!value);
 }
 
 export function updater(event){
