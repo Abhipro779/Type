@@ -5,30 +5,41 @@ export const keyscount=readable([14,28,41,53,61]);
 export const NonCap=readable(['ऽ', '१', '२', '३', '४', '५', '६', '७', '८', '९', '०', '-', '',"Back","Tab", 'ट', 'ौ', 'े', 'र', 'त', 'य', 'ु', 'ि', 'ो', 'प', 'इ', 'ए', 'ॐ',"Caps", 'ा', 'स', 'द', 'उ', 'ग', 'ह', 'ज', 'क', 'ल', ';', "'","Enter","Shift", 'ष', 'ड', 'छ', 'व', 'ब', 'न', 'म', ',' ,'।', '्',"Shift","Ctrl","WN","Alt"," ","Alt","FN","Ctx","Ctrl"]);
 export const Cap=readable(['़', '!', '@', '#', '$', '%', '^', '&', '*', '', '॰', '॒', '',"None","None", 'ठ', 'औ', 'ै', 'ृ', 'थ', 'ञ', 'ू', 'ी', 'ओ', 'फ', 'ई', 'ऐ', 'ः',"None", 'आ', 'श', 'ध', 'ऊ', 'घ', 'अ', 'झ', 'ख', 'ळ', ':', '"',"None","None", 'ऋ', 'ढ', 'च', 'ँ', 'भ', 'ण', 'ं', 'ङ', '॥', '?',"None","None","None","None","None","None","None","None","None"]);
 
-export const speeddata=readable(Array(get(keylist).length).fill([]))
+export const speeddata=readable(Array(get(keylist).length).fill([[],[]]))
 export const toggler=writable(true);
 const maintexts=[
     "ी होपे योु ारे उिने।",
-    "औहात िस योुर नामे?",
+    "औहात सि योुर नामे?",
     "माहेनदरानागार बाता कातहमानदु साममा।",
     "थहिस िस ा लोनग तेसत दोने तो तेसत ौेतहेर चुरसोर ौिलल रेसेत ोन रेसिषे ोर नोत। ी होपे ित ौिलल रेसिषे।"
 ]
-
+let time=0;
 export const displaytext=writable(maintexts[0])
 export const counter=writable(0);
-
+export const nextitem=writable(get(displaytext)[0]);
 
 export function reset(){
 displaytext.update((value)=>{
 return maintexts[Math.floor(Math.random()*maintexts.length)]
-});
+}
+);
 counter.set(0);
+nextitem.set(get(displaytext)[0]);
 console.log(`reset ran!${get(counter)}`);
 toggler.update(value=>!value);
 }
-
+function timeupdate(index,timestamp,shift){
+    if(index!=-1){
+        let newtime=timestamp-time;
+        if(time!=0 && get(counter)!=0 && newtime<5000){
+            speeddata.update((value)=>value[index][shift ? 0 : 1].push(newtime));
+        }
+    }
+    time=timestamp;
+}
 export function updater(event){
     const {code,shiftKey}=event;
+    console.log(event.timeStamp);
     let index=get(keylist).indexOf(code);
     if(index==-1)return null
     let value=(shiftKey ? get(Cap) : get(NonCap))[index];
@@ -43,6 +54,7 @@ export function updater(event){
         }
     }
     else{
+        time=0;
         return {
             value:index,
             correct:false,
@@ -57,6 +69,7 @@ export function counterupdate(){
         reset()
     }
     else{
-        counter.update((value)=>value+1)
+        counter.update((value)=>value+1);
+        nextitem.set(get(displaytext)[get(counter)]);
     }
 }

@@ -1,7 +1,6 @@
 <script>
-import {keylist,keysize,keyscount,NonCap,Cap,reset} from "./stores.js";
+import {keylist,keysize,keyscount,NonCap,Cap,reset,nextitem} from "./stores.js";
 import Key from "./key.svelte";
-export let nextitem;
 let keydata=[];
 let mode=true;
 let height;
@@ -46,10 +45,10 @@ value[0].forEach(element => {
 });
 }
 </script>
-
+<div class="keyboardholder">
 <div class="buttonholder flexed">
 <button on:click={reset}>Click for reset.</button>
-<div class="thebox">{nextitem==" " ? "_" : nextitem}</div>
+<div class="thebox">{$nextitem==" " ? "_" : $nextitem}</div>
 <button on:click={()=>mode=!mode}>Change Mode</button>
 </div>
 <div class="flexed down" >
@@ -58,6 +57,7 @@ value[0].forEach(element => {
 <Key size={key.size} mode={mode} position={key.position} values={key.values} greenscale={key.greenscale} bind:this={key.refs} />
 {/each}
     </svg>
+</div>
 </div>
 <style>
     div{position:relative;
@@ -71,17 +71,17 @@ value[0].forEach(element => {
         justify-content: center;
         align-items: center;
     }
-    .down{
 
-    }
     .buttonholder{
         justify-content: space-evenly;
         margin:10px;
         padding:5px;
+        height:15%;
     }
     button{
-        aspect-ratio:2;
-        width:100px;
+        aspect-ratio:3.5;
+        width:10%;
+        font-size: 1vw;
         box-shadow: 0px 0px 5px 2px;
         background-color: gray;
         transition:scale 0.5s, box-shadow 0.5s;
@@ -97,6 +97,9 @@ value[0].forEach(element => {
         display: flex;
         justify-content: center;
         font-size: 32px;
+    }
+    .keyboardholder{
+        height:100%;
     }
 </style>
 
