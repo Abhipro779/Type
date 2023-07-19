@@ -1,5 +1,5 @@
 <script>
-import Keyboard from "./keyboard.svelte";
+import Keyboard from "./Keyboard.svelte";
 import Header from "./Header.svelte";
 let obj;
 let val=true;
